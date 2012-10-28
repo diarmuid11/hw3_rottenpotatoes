@@ -1,3 +1,4 @@
+
 # Add a declarative step here for populating the DB with movies.
 
 Given /the following movies exist/ do |movies_table|
@@ -32,3 +33,13 @@ When /I (un)?check the following ratings: (.*)/ do |uncheck, rating_list|
     end
   end
 end
+
+Then /I should see all of the movies/ do
+  rows=page.find_by_id('movies').all("tbody/tr").length
+  if rows.respond_to? :should
+    rows.should == 10
+  else
+    assert_equal rows, 10
+  end
+end
+
